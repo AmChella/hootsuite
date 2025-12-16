@@ -12,7 +12,7 @@ import {
 import { Card, CardContent, Button, Badge, Modal, ModalFooter } from '../components/ui';
 import { usePosts } from '../context/PostContext';
 import { getPlatformById } from '../data/platforms';
-import type { PublishResult } from '../services/mockApi';
+import type { PublishResult } from '../services/api';
 import './PublishingStatus.css';
 
 export function PublishingStatus() {

@@ -14,11 +14,11 @@ import {
   CardContent,
   Button,
   Badge,
-  Input,
   Modal,
+  Input,
 } from '../components/ui';
-import { postsApi, publishApi } from '../services/mockApi';
-import type { Post, PublishResult } from '../services/mockApi'; 
+import { postsApi, publishApi } from '../services/api';
+import type { Post, PublishResult } from '../services/api';
 import { getPlatformById } from '../data/platforms';
 import './PostHistory.css';
 

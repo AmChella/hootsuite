@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent, Button, Badge } from '../components/ui';
 import { usePlatforms } from '../context/PlatformContext';
-import { statsApi } from '../services/mockApi';
+import { statsApi } from '../services/api';
 import { platforms, getPlatformById } from '../data/platforms';
 import './Dashboard.css';
 

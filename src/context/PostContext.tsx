@@ -1,7 +1,7 @@
 import { createContext, useContext, useReducer, useCallback } from 'react';
 import type { ReactNode } from 'react';
-import { postsApi, publishApi } from '../services/mockApi';
-import type { Post, PublishResult } from '../services/mockApi';
+import { postsApi, publishApi } from '../services/api';
+import type { Post, PublishResult } from '../services/api';
 
 interface PostState {
   posts: Post[];

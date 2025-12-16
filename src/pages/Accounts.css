@@ -326,3 +326,66 @@
         opacity: 1;
     }
 }
+
+/* Platform Configuration */
+.platform-config-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.platform-config-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-4);
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+}
+
+.platform-config-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    color: white;
+    flex-shrink: 0;
+}
+
+.platform-config-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.platform-config-name {
+    display: block;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-1);
+}
+
+.platform-config-status {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.platform-config-details {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    font-size: var(--font-size-xs);
+    text-align: right;
+}
+
+.config-set {
+    color: var(--color-success);
+}
+
+.config-missing {
+    color: var(--color-error);
+}

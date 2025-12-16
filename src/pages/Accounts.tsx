@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Trash2,
   RefreshCw,
   CheckCircle,
   Unlink,
   ExternalLink,
+  Settings,
+  AlertTriangle,
 } from 'lucide-react';
 import {
   Card,
@@ -18,6 +20,7 @@ import {
   ModalFooter,
 } from '../components/ui';
 import { usePlatforms } from '../context/PlatformContext';
+import { accountsApi, type PlatformConfig } from '../services/api';
 import { platforms, getPlatformById } from '../data/platforms';
 import './Accounts.css';
 
@@ -30,9 +33,26 @@ export function Accounts() {
     platformName: '',
   });
   const [isDisconnecting, setIsDisconnecting] = useState(false);
+  const [platformConfigs, setPlatformConfigs] = useState<PlatformConfig[]>([]);
+  const [configLoading, setConfigLoading] = useState(true);
 
   const connectedPlatformIds = accounts.map((a) => a.platformId);
   const availablePlatforms = platforms.filter((p) => !connectedPlatformIds.includes(p.id));
+
+  // Fetch platform configurations
+  useEffect(() => {
+    const fetchConfigs = async () => {
+      try {
+        const configs = await accountsApi.getPlatformConfigs();
+        setPlatformConfigs(configs);
+      } catch (error) {
+        console.error('Failed to fetch platform configs:', error);
+      } finally {
+        setConfigLoading(false);
+      }
+    };
+    fetchConfigs();
+  }, []);
 
   const handleConnect = async (platformId: string) => {
     setConnectingPlatform(platformId);
@@ -230,6 +250,69 @@ export function Accounts() {
               authentication to securely connect to your accounts.
             </p>
           </div>
+        </CardContent>
+      </Card>
+
+      {/* Platform Configuration */}
+      <Card className="accounts-section">
+        <CardHeader>
+          <CardTitle>
+            <Settings size={20} style={{ marginRight: '8px', verticalAlign: 'middle' }} />
+            Platform Configuration
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="accounts-add-description">
+            OAuth configuration status for social media platforms. Contact your administrator to configure API credentials.
+          </p>
+          
+          {configLoading ? (
+            <div className="accounts-loading">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="skeleton" style={{ height: 60 }} />
+              ))}
+            </div>
+          ) : (
+            <div className="platform-config-list">
+              {platformConfigs.map((config) => {
+                const platform = getPlatformById(config.platform_id);
+                if (!platform) return null;
+                
+                return (
+                  <div key={config.platform_id} className="platform-config-item">
+                    <div
+                      className="platform-config-icon"
+                      style={{ background: platform.color }}
+                    >
+                      <platform.icon size={20} />
+                    </div>
+                    <div className="platform-config-info">
+                      <span className="platform-config-name">{config.platform_name}</span>
+                      <div className="platform-config-status">
+                        {config.is_configured ? (
+                          <Badge variant="success" size="sm">
+                            <CheckCircle size={12} /> Configured
+                          </Badge>
+                        ) : (
+                          <Badge variant="warning" size="sm">
+                            <AlertTriangle size={12} /> Not Configured
+                          </Badge>
+                        )}
+                      </div>
+                    </div>
+                    <div className="platform-config-details">
+                      <span className={config.client_id_set ? 'config-set' : 'config-missing'}>
+                        Client ID: {config.client_id_set ? '✓' : '✗'}
+                      </span>
+                      <span className={config.client_secret_set ? 'config-set' : 'config-missing'}>
+                        Client Secret: {config.client_secret_set ? '✓' : '✗'}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </CardContent>
       </Card>
 

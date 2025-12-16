@@ -159,6 +159,41 @@
   --max-content-width: 1400px;
 }
 
+/* Light Theme Override */
+.theme-light {
+  /* Color Palette - Light Theme */
+  --color-bg-primary: #f8f9fc;
+  --color-bg-secondary: #ffffff;
+  --color-bg-tertiary: #f1f3f9;
+  --color-bg-elevated: #ffffff;
+
+  --color-surface: rgba(255, 255, 255, 0.9);
+  --color-surface-hover: rgba(241, 243, 249, 0.95);
+  --color-surface-active: rgba(226, 232, 240, 0.98);
+
+  /* Text Colors */
+  --color-text-primary: #1a1a2e;
+  --color-text-secondary: #64748b;
+  --color-text-tertiary: #94a3b8;
+  --color-text-muted: #cbd5e1;
+
+  /* Borders */
+  --border-subtle: 1px solid rgba(0, 0, 0, 0.04);
+  --border-default: 1px solid rgba(0, 0, 0, 0.08);
+  --border-strong: 1px solid rgba(0, 0, 0, 0.12);
+
+  /* Shadows - Softer for light theme */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+
+  /* Glassmorphism - Light version */
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-bg-hover: rgba(241, 243, 249, 0.9);
+  --glass-border: rgba(0, 0, 0, 0.08);
+}
+
 /* Base Styles */
 html {
   font-size: 16px;

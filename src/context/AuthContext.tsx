@@ -1,7 +1,7 @@
 import { createContext, useContext, useReducer, useEffect } from 'react';
 import type { ReactNode } from 'react';
-import { authApi } from '../services/mockApi';
-import type { User } from '../services/mockApi';
+import { authApi } from '../services/api';
+import type { User } from '../services/api';
 
 interface AuthState {
   user: User | null;

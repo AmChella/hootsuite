@@ -6,3 +6,7 @@ export { PublishPost } from './PublishPost';
 export { PublishingStatus } from './PublishingStatus';
 export { PostHistory } from './PostHistory';
 export { Accounts } from './Accounts';
+export { AuthCallback } from './AuthCallback';
+export { AccountCallback } from './AccountCallback';
+export { Profile } from './Profile';
+

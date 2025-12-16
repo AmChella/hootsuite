@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
-import { AuthProvider, PlatformProvider, PostProvider, useAuth } from './context';
+import { AuthProvider, PlatformProvider, PostProvider, ThemeProvider, useAuth } from './context';
 import { AppLayout } from './components/layout';
 import {
   Login,
@@ -11,6 +11,9 @@ import {
   PublishingStatus,
   PostHistory,
   Accounts,
+  AuthCallback,
+  AccountCallback,
+  Profile,
 } from './pages';
 import { Spinner } from './components/ui';
 import './index.css';
@@ -68,6 +71,12 @@ function AppRoutes() {
         }
       />
 
+      {/* Auth Callback Route (for SSO) */}
+      <Route path="/auth/callback/:provider" element={<AuthCallback />} />
+
+      {/* Account Connection Callback Route (for social platforms) */}
+      <Route path="/accounts/callback/:platform" element={<AccountCallback />} />
+
       {/* Protected Routes */}
       <Route
         path="/"
@@ -85,6 +94,8 @@ function AppRoutes() {
         <Route path="publish/status/:postId" element={<PublishingStatus />} />
         <Route path="history" element={<PostHistory />} />
         <Route path="accounts" element={<Accounts />} />
+        <Route path="profile" element={<Profile />} />
+        <Route path="settings" element={<Profile />} />
       </Route>
 
       {/* Catch all */}
@@ -95,39 +106,41 @@ function AppRoutes() {
 
 function App() {
   return (
-    <Router>
-      <AuthProvider>
-        <PlatformProvider>
-          <PostProvider>
-            <AppRoutes />
-            <Toaster
-              position="top-right"
-              toastOptions={{
-                duration: 4000,
-                style: {
-                  background: 'var(--color-bg-secondary)',
-                  color: 'var(--color-text-primary)',
-                  border: '1px solid var(--glass-border)',
-                  borderRadius: 'var(--radius-md)',
-                },
-                success: {
-                  iconTheme: {
-                    primary: 'var(--color-success)',
-                    secondary: 'white',
+    <ThemeProvider>
+      <Router>
+        <AuthProvider>
+          <PlatformProvider>
+            <PostProvider>
+              <AppRoutes />
+              <Toaster
+                position="top-right"
+                toastOptions={{
+                  duration: 4000,
+                  style: {
+                    background: 'var(--color-bg-secondary)',
+                    color: 'var(--color-text-primary)',
+                    border: '1px solid var(--glass-border)',
+                    borderRadius: 'var(--radius-md)',
                   },
-                },
-                error: {
-                  iconTheme: {
-                    primary: 'var(--color-error)',
-                    secondary: 'white',
+                  success: {
+                    iconTheme: {
+                      primary: 'var(--color-success)',
+                      secondary: 'white',
+                    },
                   },
-                },
-              }}
-            />
-          </PostProvider>
-        </PlatformProvider>
-      </AuthProvider>
-    </Router>
+                  error: {
+                    iconTheme: {
+                      primary: 'var(--color-error)',
+                      secondary: 'white',
+                    },
+                  },
+                }}
+              />
+            </PostProvider>
+          </PlatformProvider>
+        </AuthProvider>
+      </Router>
+    </ThemeProvider>
   );
 }
 
