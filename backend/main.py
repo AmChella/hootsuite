@@ -40,6 +40,11 @@ app.add_middleware(
         settings.frontend_url,
         "http://localhost:5173",
         "http://localhost:3000",
+        # Mobile app origins
+        "http://localhost:8081",  # Expo development
+        "exp://localhost:8081",   # Expo Go
+        "exp://192.168.*.*:8081", # Expo Go on local network
+        "socialpublisher://",     # Production deep link scheme
     ],
     allow_credentials=True,
     allow_methods=["*"],

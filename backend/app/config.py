@@ -14,6 +14,9 @@ class Settings(BaseSettings):
     # Frontend URL
     frontend_url: str = "http://localhost:5173"
     
+    # Mobile App URL (deep link scheme for OAuth callbacks)
+    mobile_app_scheme: str = "socialpublisher"
+    
     # MongoDB
     mongodb_url: str = "mongodb://localhost:27017"
     mongodb_db_name: str = "hootsuite_clone"

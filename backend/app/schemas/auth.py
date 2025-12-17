@@ -40,3 +40,15 @@ class SSOAuthUrl(BaseModel):
     """Schema for SSO authorization URL response."""
     auth_url: str
     provider: str
+
+
+class ProfileUpdate(BaseModel):
+    """Schema for profile update."""
+    name: Optional[str] = None
+    avatar: Optional[str] = None
+
+
+class PasswordChange(BaseModel):
+    """Schema for password change."""
+    current_password: str
+    new_password: str

@@ -175,3 +175,71 @@ media/
 secrets/
 credentials/
 *.secret
+
+# ===================================
+# Mobile (Expo / React Native)
+# ===================================
+
+# Expo
+mobile/.expo/
+mobile/dist/
+mobile/web-build/
+.expo/
+web-build/
+
+# Expo EAS
+mobile/.eas/
+.eas/
+
+# Native builds
+mobile/ios/
+mobile/android/
+ios/
+android/
+
+# Metro bundler
+mobile/.metro-health-check*
+.metro-health-check*
+
+# Expo build artifacts
+mobile/*.hprof
+*.hprof
+
+# Expo development artifacts
+mobile/.expo-shared/
+.expo-shared/
+
+# React Native
+mobile/*.jsbundle
+*.jsbundle
+
+# Watchman
+.watchmanconfig
+
+# Buck (React Native build)
+mobile/.buckd/
+.buckd/
+buck-out/
+
+# CocoaPods
+mobile/ios/Pods/
+Pods/
+Podfile.lock
+
+# Gradle (Android)
+mobile/android/.gradle/
+.gradle/
+mobile/android/build/
+mobile/android/app/build/
+local.properties
+
+# Fastlane
+mobile/**/fastlane/report.xml
+mobile/**/fastlane/Preview.html
+mobile/**/fastlane/screenshots
+mobile/**/fastlane/test_output
+
+# Bundle artifacts
+mobile/*.jsbundle.map
+*.jsbundle.map
+
