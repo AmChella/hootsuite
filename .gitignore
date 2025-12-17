@@ -1,26 +1,23 @@
 # ===================================
-# Frontend (Node.js / Vite / React)
+# Web Frontend (web/)
 # ===================================
 
 # Dependencies
+web/node_modules/
 node_modules/
-.pnp
-.pnp.js
 
 # Build outputs
-dist/
-dist-ssr/
-build/
+web/dist/
+web/dist-ssr/
+web/build/
 *.local
 
 # Logs
-logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-lerna-debug.log*
 
 # Cache
 .cache/
@@ -33,70 +30,100 @@ coverage/
 .nyc_output/
 
 # ===================================
-# Backend (Python / FastAPI)
+# Backend (backend/)
 # ===================================
 
-# Byte-compiled / optimized / DLL files
+# Byte-compiled / optimized
 __pycache__/
 *.py[cod]
 *$py.class
-
-# C extensions
 *.so
 
 # Virtual environments
+backend/venv/
+backend/.venv/
 venv/
 .venv/
 ENV/
 env/
-.env.venv/
 
 # Distribution / packaging
 *.egg
 *.egg-info/
-dist/
-build/
-eggs/
-parts/
-sdist/
-var/
 wheels/
 *.whl
-*.manifest
-*.spec
 
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
-
-# Unit test / coverage reports
+# Test / coverage
 htmlcov/
 .tox/
 .nox/
 .coverage
 .coverage.*
-.cache/
 nosetests.xml
 coverage.xml
 *.cover
-*.py,cover
 .hypothesis/
 .pytest_cache/
-pytest_cache/
 
-# mypy
+# Type checkers
 .mypy_cache/
 .dmypy.json
-dmypy.json
-
-# Pyre type checker
 .pyre/
-
-# pytype static type analyzer
 .pytype/
 
-# Cython debug symbols
-cython_debug/
+# ===================================
+# Mobile (mobile/)
+# ===================================
+
+# Expo
+mobile/.expo/
+mobile/dist/
+mobile/web-build/
+.expo/
+web-build/
+
+# Expo EAS
+mobile/.eas/
+.eas/
+
+# Native builds (generated)
+mobile/ios/
+mobile/android/
+ios/
+android/
+
+# Metro bundler
+.metro-health-check*
+
+# Expo artifacts
+*.hprof
+mobile/.expo-shared/
+.expo-shared/
+
+# React Native bundles
+*.jsbundle
+*.jsbundle.map
+
+# Watchman
+.watchmanconfig
+
+# Buck
+.buckd/
+buck-out/
+
+# CocoaPods
+Pods/
+Podfile.lock
+
+# Gradle (Android)
+.gradle/
+local.properties
+
+# Fastlane
+**/fastlane/report.xml
+**/fastlane/Preview.html
+**/fastlane/screenshots
+**/fastlane/test_output
 
 # ===================================
 # Environment Variables (SECRETS!)
@@ -107,6 +134,12 @@ cython_debug/
 backend/.env
 backend/.env.*
 !backend/.env.example
+web/.env
+web/.env.*
+!web/.env.example
+mobile/.env
+mobile/.env.*
+!mobile/.env.example
 
 # ===================================
 # Editor / IDE
@@ -124,9 +157,6 @@ backend/.env.*
 *.swp
 *.swo
 *~
-
-# JetBrains IDEs
-.idea/
 *.iml
 
 # ===================================
@@ -159,87 +189,19 @@ docker-compose.override.yml
 *.tmp
 *.temp
 
-# Uploads / Media (if storing locally)
+# Uploads / Media
 uploads/
 media/
 
-# Database files (local development)
+# Database files
 *.db
 *.sqlite
 *.sqlite3
 
-# Jupyter Notebooks
+# Jupyter
 .ipynb_checkpoints/
 
-# Secrets and credentials
+# Secrets
 secrets/
 credentials/
 *.secret
-
-# ===================================
-# Mobile (Expo / React Native)
-# ===================================
-
-# Expo
-mobile/.expo/
-mobile/dist/
-mobile/web-build/
-.expo/
-web-build/
-
-# Expo EAS
-mobile/.eas/
-.eas/
-
-# Native builds
-mobile/ios/
-mobile/android/
-ios/
-android/
-
-# Metro bundler
-mobile/.metro-health-check*
-.metro-health-check*
-
-# Expo build artifacts
-mobile/*.hprof
-*.hprof
-
-# Expo development artifacts
-mobile/.expo-shared/
-.expo-shared/
-
-# React Native
-mobile/*.jsbundle
-*.jsbundle
-
-# Watchman
-.watchmanconfig
-
-# Buck (React Native build)
-mobile/.buckd/
-.buckd/
-buck-out/
-
-# CocoaPods
-mobile/ios/Pods/
-Pods/
-Podfile.lock
-
-# Gradle (Android)
-mobile/android/.gradle/
-.gradle/
-mobile/android/build/
-mobile/android/app/build/
-local.properties
-
-# Fastlane
-mobile/**/fastlane/report.xml
-mobile/**/fastlane/Preview.html
-mobile/**/fastlane/screenshots
-mobile/**/fastlane/test_output
-
-# Bundle artifacts
-mobile/*.jsbundle.map
-*.jsbundle.map
-

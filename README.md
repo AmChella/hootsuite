@@ -1,73 +1,103 @@
-# React + TypeScript + Vite
+# Social Publisher
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A cross-platform social media management application for scheduling and publishing posts to multiple social media platforms.
 
-Currently, two official plugins are available:
+## Project Structure
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+├── backend/          # Python FastAPI backend
+├── mobile/           # React Native/Expo mobile app (iOS & Android)
+├── web/              # React web frontend (Vite)
+└── README.md
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Features
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- 📱 **Cross-platform** - Web, iOS, and Android apps
+- 🔐 **Authentication** - Email/password and OAuth (Google, Facebook)
+- 📊 **Dashboard** - Analytics and performance tracking
+- 📝 **Post Management** - Create, schedule, and publish posts
+- 🔗 **Multi-platform** - Connect Facebook, Instagram, Twitter, LinkedIn, YouTube
+- 👤 **User Profile** - Edit profile, change password, notification settings
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Quick Start
+
+### Backend
+
+```bash
+cd backend
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install -r requirements.txt
+cp .env.example .env      # Configure your environment
+python -m uvicorn main:app --reload
 ```
+
+Backend runs at: http://localhost:8000
+
+### Web App
+
+```bash
+cd web
+npm install
+npm run dev
+```
+
+Web app runs at: http://localhost:5173
+
+### Mobile App
+
+```bash
+cd mobile
+npm install
+npm run start             # Start Expo dev server
+npm run ios               # Run on iOS simulator
+npm run android           # Run on Android emulator
+npm run web               # Run in browser
+```
+
+## Environment Variables
+
+### Backend (.env)
+
+```env
+SECRET_KEY=your-secret-key
+MONGODB_URL=mongodb://localhost:27017
+DATABASE_NAME=social_publisher
+
+# OAuth
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+FACEBOOK_APP_ID=your-facebook-app-id
+FACEBOOK_APP_SECRET=your-facebook-app-secret
+```
+
+### Web (.env)
+
+```env
+VITE_API_URL=http://localhost:8000
+```
+
+## Tech Stack
+
+### Backend
+- **FastAPI** - Python async web framework
+- **MongoDB/Beanie** - Database and ODM
+- **bcrypt** - Password hashing
+- **PyJWT** - JSON Web Tokens
+
+### Web
+- **React** - UI library
+- **TypeScript** - Type safety
+- **Vite** - Build tool
+- **React Router** - Navigation
+
+### Mobile
+- **React Native** - Cross-platform mobile
+- **Expo** - Development platform
+- **Expo Router** - File-based navigation
+- **Expo Secure Store** - Token storage
+
+## License
+
+MIT
