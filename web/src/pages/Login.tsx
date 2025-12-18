@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Mail, Lock, Zap, ArrowRight } from 'lucide-react';
+import { Mail, Lock, Zap, ArrowRight, User, Sparkles, Globe, BarChart3, Clock } from 'lucide-react';
 import { Button, Input } from '../components/ui';
 import { useAuth } from '../context/AuthContext';
 import './Login.css';
@@ -77,162 +77,259 @@ export function Login() {
 
   return (
     <div className="login-page">
-      {/* Animated background */}
+      {/* Futuristic Animated Background */}
       <div className="login-bg">
         <div className="login-bg-gradient" />
-        <div className="login-bg-pattern" />
-        <div className="login-bg-orb login-bg-orb-1" />
-        <div className="login-bg-orb login-bg-orb-2" />
-        <div className="login-bg-orb login-bg-orb-3" />
+        <div className="login-bg-mesh" />
+        <div className="login-bg-glow login-bg-glow-1" />
+        <div className="login-bg-glow login-bg-glow-2" />
+        <div className="login-bg-glow login-bg-glow-3" />
+        
+        {/* Floating particles */}
+        <div className="login-particles">
+          {[...Array(20)].map((_, i) => (
+            <div key={i} className="login-particle" style={{
+              '--delay': `${i * 0.5}s`,
+              '--x': `${Math.random() * 100}%`,
+              '--duration': `${15 + Math.random() * 10}s`
+            } as React.CSSProperties} />
+          ))}
+        </div>
+        
+        {/* Animated rings */}
+        <div className="login-rings">
+          <div className="login-ring login-ring-1" />
+          <div className="login-ring login-ring-2" />
+          <div className="login-ring login-ring-3" />
+        </div>
       </div>
 
-      <div className="login-container">
-        <div className="login-card">
-          {/* Logo */}
-          <div className="login-logo">
-            <div className="login-logo-icon">
-              <Zap size={28} />
+      <div className="login-layout">
+        {/* Left side - Branding & Features */}
+        <div className="login-hero">
+          <div className="login-hero-content">
+            <div className="login-logo">
+              <div className="login-logo-icon">
+                <Zap size={32} />
+                <div className="login-logo-pulse" />
+              </div>
+              <div className="login-logo-text">
+                <span className="login-brand">Social</span>
+                <span className="login-brand-accent">Publisher</span>
+              </div>
             </div>
-            <h1 className="login-logo-text">Social Publisher</h1>
-          </div>
-
-          <p className="login-subtitle">
-            {isLogin 
-              ? 'Welcome back! Sign in to continue.' 
-              : 'Create an account to get started.'}
-          </p>
-
-          {/* SSO Buttons */}
-          <div className="login-sso">
-            <button 
-              className="login-sso-btn"
-              onClick={() => handleSSO('google')}
-              disabled={ssoLoading !== null}
-            >
-              {ssoLoading === 'google' ? (
-                <span className="login-sso-spinner" />
-              ) : (
-                <GoogleIcon />
-              )}
-              <span>Google</span>
-            </button>
-            <button 
-              className="login-sso-btn"
-              onClick={() => handleSSO('facebook')}
-              disabled={ssoLoading !== null}
-            >
-              {ssoLoading === 'facebook' ? (
-                <span className="login-sso-spinner" />
-              ) : (
-                <FacebookIcon />
-              )}
-              <span>Facebook</span>
-            </button>
-            <button 
-              className="login-sso-btn"
-              onClick={() => handleSSO('twitter')}
-              disabled={ssoLoading !== null}
-            >
-              {ssoLoading === 'twitter' ? (
-                <span className="login-sso-spinner" />
-              ) : (
-                <TwitterIcon />
-              )}
-              <span>Twitter</span>
-            </button>
-            <button 
-              className="login-sso-btn"
-              onClick={() => handleSSO('linkedin')}
-              disabled={ssoLoading !== null}
-            >
-              {ssoLoading === 'linkedin' ? (
-                <span className="login-sso-spinner" />
-              ) : (
-                <LinkedInIcon />
-              )}
-              <span>LinkedIn</span>
-            </button>
-          </div>
-
-          <div className="login-divider">
-            <span>or continue with email</span>
-          </div>
-
-          {/* Login/Register Form */}
-          <form className="login-form" onSubmit={handleSubmit}>
-            {!isLogin && (
-              <Input
-                type="text"
-                label="Full Name"
-                placeholder="Enter your full name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
-            )}
             
-            <Input
-              type="email"
-              label="Email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              leftIcon={<Mail size={18} />}
-              required
-            />
+            <h1 className="login-hero-title">
+              <span className="login-hero-line">Amplify Your</span>
+              <span className="login-hero-gradient">Digital Presence</span>
+            </h1>
             
-            <Input
-              type="password"
-              label="Password"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              leftIcon={<Lock size={18} />}
-              required
-            />
+            <p className="login-hero-subtitle">
+              The next-generation platform for content creators and marketers. 
+              Publish everywhere, track everything, grow faster.
+            </p>
 
-            {error && <p className="login-error">{error}</p>}
+            <div className="login-stats">
+              <div className="login-stat">
+                <span className="login-stat-value">10M+</span>
+                <span className="login-stat-label">Posts Published</span>
+              </div>
+              <div className="login-stat">
+                <span className="login-stat-value">50K+</span>
+                <span className="login-stat-label">Active Users</span>
+              </div>
+              <div className="login-stat">
+                <span className="login-stat-value">99.9%</span>
+                <span className="login-stat-label">Uptime</span>
+              </div>
+            </div>
 
-            <Button
-              type="submit"
-              variant="primary"
-              size="lg"
-              fullWidth
-              isLoading={isLoading}
-              rightIcon={<ArrowRight size={18} />}
-            >
-              {isLogin ? 'Sign In' : 'Create Account'}
-            </Button>
-          </form>
-
-          <p className="login-toggle">
-            {isLogin ? "Don't have an account? " : 'Already have an account? '}
-            <button
-              type="button"
-              className="login-toggle-btn"
-              onClick={() => setIsLogin(!isLogin)}
-            >
-              {isLogin ? 'Sign up' : 'Sign in'}
-            </button>
-          </p>
+            <div className="login-features-grid">
+              <div className="login-feature-card">
+                <div className="login-feature-icon">
+                  <Globe size={24} />
+                </div>
+                <div className="login-feature-content">
+                  <h3>Multi-Platform</h3>
+                  <p>Connect all your social networks in one place</p>
+                </div>
+              </div>
+              <div className="login-feature-card">
+                <div className="login-feature-icon">
+                  <BarChart3 size={24} />
+                </div>
+                <div className="login-feature-content">
+                  <h3>Real-time Analytics</h3>
+                  <p>Track performance across all platforms</p>
+                </div>
+              </div>
+              <div className="login-feature-card">
+                <div className="login-feature-icon">
+                  <Clock size={24} />
+                </div>
+                <div className="login-feature-content">
+                  <h3>Smart Scheduling</h3>
+                  <p>AI-powered best time suggestions</p>
+                </div>
+              </div>
+              <div className="login-feature-card">
+                <div className="login-feature-icon">
+                  <Sparkles size={24} />
+                </div>
+                <div className="login-feature-content">
+                  <h3>AI Assistant</h3>
+                  <p>Generate captions and hashtags instantly</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* Feature highlights */}
-        <div className="login-features">
-          <div className="login-feature">
-            <div className="login-feature-icon">📱</div>
-            <h3>Multi-Platform</h3>
-            <p>Publish to all major social networks at once</p>
-          </div>
-          <div className="login-feature">
-            <div className="login-feature-icon">📊</div>
-            <h3>Track Status</h3>
-            <p>Real-time publishing status and analytics</p>
-          </div>
-          <div className="login-feature">
-            <div className="login-feature-icon">🚀</div>
-            <h3>Save Time</h3>
-            <p>Schedule posts and automate your workflow</p>
+        {/* Right side - Login Form */}
+        <div className="login-form-section">
+          <div className="login-card">
+            <div className="login-card-header">
+              <h2 className="login-card-title">
+                {isLogin ? 'Welcome Back' : 'Create Account'}
+              </h2>
+              <p className="login-card-subtitle">
+                {isLogin 
+                  ? 'Sign in to continue to your dashboard' 
+                  : 'Start your journey with us today'}
+              </p>
+            </div>
+
+            {/* SSO Buttons */}
+            <div className="login-sso">
+              <button 
+                className="login-sso-btn"
+                onClick={() => handleSSO('google')}
+                disabled={ssoLoading !== null}
+              >
+                {ssoLoading === 'google' ? (
+                  <span className="login-sso-spinner" />
+                ) : (
+                  <GoogleIcon />
+                )}
+                <span>Google</span>
+              </button>
+              <button 
+                className="login-sso-btn"
+                onClick={() => handleSSO('facebook')}
+                disabled={ssoLoading !== null}
+              >
+                {ssoLoading === 'facebook' ? (
+                  <span className="login-sso-spinner" />
+                ) : (
+                  <FacebookIcon />
+                )}
+                <span>Facebook</span>
+              </button>
+              <button 
+                className="login-sso-btn"
+                onClick={() => handleSSO('twitter')}
+                disabled={ssoLoading !== null}
+              >
+                {ssoLoading === 'twitter' ? (
+                  <span className="login-sso-spinner" />
+                ) : (
+                  <TwitterIcon />
+                )}
+                <span>Twitter</span>
+              </button>
+              <button 
+                className="login-sso-btn"
+                onClick={() => handleSSO('linkedin')}
+                disabled={ssoLoading !== null}
+              >
+                {ssoLoading === 'linkedin' ? (
+                  <span className="login-sso-spinner" />
+                ) : (
+                  <LinkedInIcon />
+                )}
+                <span>LinkedIn</span>
+              </button>
+            </div>
+
+            <div className="login-divider">
+              <span>or continue with email</span>
+            </div>
+
+            {/* Login/Register Form */}
+            <form className="login-form" onSubmit={handleSubmit}>
+              {!isLogin && (
+                <Input
+                  type="text"
+                  label="Full Name"
+                  placeholder="Enter your full name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  leftIcon={<User size={18} />}
+                  required
+                />
+              )}
+              
+              <Input
+                type="email"
+                label="Email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                leftIcon={<Mail size={18} />}
+                required
+              />
+              
+              <Input
+                type="password"
+                label="Password"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                leftIcon={<Lock size={18} />}
+                required
+              />
+
+              {error && <p className="login-error">{error}</p>}
+
+              <Button
+                type="submit"
+                variant="primary"
+                size="lg"
+                fullWidth
+                isLoading={isLoading}
+                rightIcon={<ArrowRight size={18} />}
+              >
+                {isLogin ? 'Sign In' : 'Create Account'}
+              </Button>
+            </form>
+
+            <p className="login-toggle">
+              {isLogin ? "Don't have an account? " : 'Already have an account? '}
+              <button
+                type="button"
+                className="login-toggle-btn"
+                onClick={() => setIsLogin(!isLogin)}
+              >
+                {isLogin ? 'Sign up free' : 'Sign in'}
+              </button>
+            </p>
+
+            <div className="login-trust">
+              <div className="login-trust-badge">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  <path d="M9 12l2 2 4-4"/>
+                </svg>
+                <span>256-bit SSL Encrypted</span>
+              </div>
+              <div className="login-trust-badge">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                  <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+                <span>GDPR Compliant</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>

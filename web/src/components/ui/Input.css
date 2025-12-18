@@ -1,3 +1,7 @@
+/* ===================================
+   Input Component - Futuristic Design
+   =================================== */
+
 .input-wrapper {
     display: flex;
     flex-direction: column;
@@ -15,51 +19,135 @@
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-medium);
     color: var(--color-text-secondary);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
 }
 
 .char-count {
     font-size: var(--font-size-xs);
     color: var(--color-text-tertiary);
+    font-variant-numeric: tabular-nums;
 }
 
 .char-count-error {
     color: var(--color-error);
 }
 
+/* Input Container - Futuristic Style */
 .input-container {
     position: relative;
     display: flex;
     align-items: center;
-    background: var(--color-bg-tertiary);
-    border: 1px solid var(--glass-border);
-    border-radius: var(--radius-md);
-    transition: all var(--transition-fast);
+    background: linear-gradient(135deg,
+            rgba(26, 26, 46, 0.8) 0%,
+            rgba(36, 36, 56, 0.6) 100%);
+    border: 1px solid rgba(99, 102, 241, 0.15);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-normal);
+    overflow: hidden;
+}
+
+/* Glow effect on focus */
+.input-container::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,
+            rgba(99, 102, 241, 0) 0%,
+            rgba(99, 102, 241, 0.05) 100%);
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+    pointer-events: none;
+}
+
+.input-container:hover {
+    border-color: rgba(99, 102, 241, 0.3);
+    background: linear-gradient(135deg,
+            rgba(30, 30, 50, 0.9) 0%,
+            rgba(40, 40, 60, 0.7) 100%);
+}
+
+.input-container:hover::before {
+    opacity: 1;
 }
 
 .input-container:focus-within {
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px var(--color-primary-glow);
+    box-shadow:
+        0 0 0 3px rgba(99, 102, 241, 0.15),
+        0 0 20px rgba(99, 102, 241, 0.1),
+        inset 0 1px 1px rgba(255, 255, 255, 0.05);
+    background: linear-gradient(135deg,
+            rgba(35, 35, 55, 0.95) 0%,
+            rgba(45, 45, 65, 0.8) 100%);
+}
+
+.input-container:focus-within::before {
+    opacity: 1;
+    background: linear-gradient(135deg,
+            rgba(99, 102, 241, 0.05) 0%,
+            rgba(139, 92, 246, 0.05) 100%);
+}
+
+/* Animated border gradient (subtle) */
+.input-container::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(135deg,
+            rgba(99, 102, 241, 0.3) 0%,
+            rgba(139, 92, 246, 0.3) 50%,
+            rgba(99, 102, 241, 0.3) 100%);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+}
+
+.input-container:focus-within::after {
+    opacity: 1;
+    animation: borderGlow 3s ease-in-out infinite;
+}
+
+@keyframes borderGlow {
+
+    0%,
+    100% {
+        opacity: 0.5;
+    }
+
+    50% {
+        opacity: 1;
+    }
 }
 
 .input-container.input-error {
     border-color: var(--color-error);
+    background: linear-gradient(135deg,
+            rgba(239, 68, 68, 0.05) 0%,
+            rgba(26, 26, 46, 0.8) 100%);
 }
 
 .input-container.input-error:focus-within {
-    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+    box-shadow:
+        0 0 0 3px rgba(239, 68, 68, 0.15),
+        0 0 20px rgba(239, 68, 68, 0.1);
 }
 
+/* Input Field */
 .input {
     flex: 1;
-    height: 48px;
+    height: 52px;
     padding: 0 var(--space-4);
     background: transparent;
     border: none;
     color: var(--color-text-primary);
     font-family: var(--font-family);
     font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
     outline: none;
     width: 100%;
+    letter-spacing: 0.01em;
 }
 
 .input.has-left-icon {
@@ -72,37 +160,70 @@
 
 .input::placeholder {
     color: var(--color-text-tertiary);
+    font-weight: var(--font-weight-normal);
 }
 
+/* Icon Styling */
 .input-icon {
     position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 44px;
+    height: 44px;
     color: var(--color-text-tertiary);
+    transition: all var(--transition-fast);
 }
 
 .input-icon-left {
-    left: var(--space-4);
+    left: var(--space-1);
 }
 
 .input-icon-right {
-    right: var(--space-4);
+    right: var(--space-1);
 }
 
+/* Icon glow on focus */
+.input-container:focus-within .input-icon {
+    color: var(--color-primary);
+}
+
+.input-container:focus-within .input-icon-left {
+    filter: drop-shadow(0 0 8px rgba(99, 102, 241, 0.5));
+}
+
+/* Icon background */
+.input-icon::before {
+    content: '';
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    background: rgba(99, 102, 241, 0.08);
+    border-radius: var(--radius-md);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.input-container:focus-within .input-icon::before {
+    opacity: 1;
+}
+
+/* Textarea */
 .textarea-container {
-    min-height: 120px;
+    min-height: 140px;
+    align-items: flex-start;
 }
 
 .textarea {
     flex: 1;
-    min-height: 120px;
+    min-height: 140px;
     padding: var(--space-4);
     background: transparent;
     border: none;
     color: var(--color-text-primary);
     font-family: var(--font-family);
     font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
     line-height: var(--line-height-relaxed);
     outline: none;
     resize: vertical;
@@ -111,14 +232,62 @@
 
 .textarea::placeholder {
     color: var(--color-text-tertiary);
+    font-weight: var(--font-weight-normal);
 }
 
+/* Error & Helper Text */
 .input-error-text {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
     font-size: var(--font-size-sm);
     color: var(--color-error);
+    animation: slideIn 0.2s ease-out;
 }
 
 .input-helper-text {
     font-size: var(--font-size-sm);
     color: var(--color-text-tertiary);
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===================================
+   Light Theme Overrides
+   =================================== */
+
+.theme-light .input-container {
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.9) 0%,
+            rgba(248, 249, 252, 0.8) 100%);
+    border-color: rgba(99, 102, 241, 0.12);
+}
+
+.theme-light .input-container:hover {
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.95) 0%,
+            rgba(248, 249, 252, 0.9) 100%);
+    border-color: rgba(99, 102, 241, 0.25);
+}
+
+.theme-light .input-container:focus-within {
+    background: white;
+    box-shadow:
+        0 0 0 3px rgba(99, 102, 241, 0.1),
+        0 0 20px rgba(99, 102, 241, 0.05),
+        0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.theme-light .input-icon::before {
+    background: rgba(99, 102, 241, 0.06);
 }

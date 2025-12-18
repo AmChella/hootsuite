@@ -1,3 +1,7 @@
+/* ===================================
+   Button Component - Futuristic Design
+   =================================== */
+
 .btn {
     display: inline-flex;
     align-items: center;
@@ -5,8 +9,9 @@
     gap: var(--space-2);
     font-family: var(--font-family);
     font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.02em;
     border: none;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-lg);
     cursor: pointer;
     transition: all var(--transition-fast);
     white-space: nowrap;
@@ -24,84 +29,165 @@
     outline-offset: 2px;
 }
 
+/* Shimmer effect on hover */
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.15),
+            transparent);
+    transition: left 0.5s ease;
+}
+
+.btn:hover:not(:disabled)::before {
+    left: 100%;
+}
+
 /* Sizes */
 .btn-sm {
-    height: 36px;
-    padding: 0 var(--space-3);
+    height: 40px;
+    padding: 0 var(--space-4);
     font-size: var(--font-size-sm);
+    border-radius: var(--radius-md);
 }
 
 .btn-md {
-    height: 44px;
-    padding: 0 var(--space-5);
+    height: 48px;
+    padding: 0 var(--space-6);
     font-size: var(--font-size-base);
 }
 
 .btn-lg {
-    height: 52px;
+    height: 56px;
     padding: 0 var(--space-8);
     font-size: var(--font-size-lg);
 }
 
-/* Primary */
+/* Primary - Stunning gradient with glow */
 .btn-primary {
-    background: var(--gradient-primary);
+    background: linear-gradient(135deg,
+            #6366f1 0%,
+            #8b5cf6 50%,
+            #6366f1 100%);
+    background-size: 200% auto;
     color: white;
-    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    box-shadow:
+        0 4px 15px rgba(99, 102, 241, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .btn-primary:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(99, 102, 241, 0.4);
+    background-position: right center;
+    transform: translateY(-3px);
+    box-shadow:
+        0 8px 30px rgba(99, 102, 241, 0.5),
+        0 0 40px rgba(99, 102, 241, 0.2),
+        0 0 0 1px rgba(255, 255, 255, 0.15) inset;
 }
 
 .btn-primary:active:not(:disabled) {
-    transform: translateY(0);
+    transform: translateY(-1px);
+    box-shadow:
+        0 4px 15px rgba(99, 102, 241, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+}
+
+/* Pulse animation on the primary button */
+.btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    opacity: 0;
+    z-index: -1;
+    animation: btnPulse 2s ease-in-out infinite;
+}
+
+@keyframes btnPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.05);
+        opacity: 0.3;
+    }
 }
 
 /* Secondary */
 .btn-secondary {
-    background: var(--color-bg-tertiary);
+    background: linear-gradient(135deg,
+            rgba(26, 26, 46, 0.8) 0%,
+            rgba(36, 36, 56, 0.6) 100%);
     color: var(--color-text-primary);
-    border: 1px solid var(--glass-border);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .btn-secondary:hover:not(:disabled) {
-    background: var(--color-bg-elevated);
-    border-color: rgba(255, 255, 255, 0.15);
+    background: linear-gradient(135deg,
+            rgba(35, 35, 55, 0.9) 0%,
+            rgba(45, 45, 65, 0.7) 100%);
+    border-color: rgba(99, 102, 241, 0.4);
+    transform: translateY(-2px);
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(99, 102, 241, 0.1);
 }
 
 /* Ghost */
 .btn-ghost {
     background: transparent;
     color: var(--color-text-secondary);
+    border: 1px solid transparent;
 }
 
 .btn-ghost:hover:not(:disabled) {
-    background: var(--color-bg-tertiary);
+    background: rgba(99, 102, 241, 0.08);
     color: var(--color-text-primary);
+    border-color: rgba(99, 102, 241, 0.15);
 }
 
 /* Danger */
 .btn-danger {
-    background: var(--color-error);
+    background: linear-gradient(135deg,
+            #ef4444 0%,
+            #dc2626 100%);
     color: white;
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
 }
 
 .btn-danger:hover:not(:disabled) {
-    background: #dc2626;
-    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+    transform: translateY(-2px);
+    box-shadow:
+        0 6px 25px rgba(239, 68, 68, 0.4),
+        0 0 30px rgba(239, 68, 68, 0.2);
 }
 
 /* Success */
 .btn-success {
-    background: var(--color-success);
+    background: linear-gradient(135deg,
+            #22c55e 0%,
+            #16a34a 100%);
     color: white;
+    box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
 }
 
 .btn-success:hover:not(:disabled) {
-    background: #16a34a;
-    box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+    transform: translateY(-2px);
+    box-shadow:
+        0 6px 25px rgba(34, 197, 94, 0.4),
+        0 0 30px rgba(34, 197, 94, 0.2);
 }
 
 /* Full Width */
@@ -114,6 +200,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: transform var(--transition-fast);
+}
+
+.btn:hover:not(:disabled) .btn-icon-right {
+    transform: translateX(3px);
 }
 
 .btn-icon-left {
@@ -126,8 +217,8 @@
 
 /* Spinner */
 .btn-spinner {
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     border: 2px solid rgba(255, 255, 255, 0.3);
     border-top-color: white;
     border-radius: 50%;
@@ -138,4 +229,28 @@
     to {
         transform: rotate(360deg);
     }
+}
+
+/* ===================================
+   Light Theme Overrides
+   =================================== */
+
+.theme-light .btn-secondary {
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.9) 0%,
+            rgba(248, 249, 252, 0.8) 100%);
+    border-color: rgba(99, 102, 241, 0.15);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.theme-light .btn-secondary:hover:not(:disabled) {
+    background: white;
+    border-color: rgba(99, 102, 241, 0.3);
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.1),
+        0 0 20px rgba(99, 102, 241, 0.05);
+}
+
+.theme-light .btn-ghost:hover:not(:disabled) {
+    background: rgba(99, 102, 241, 0.05);
 }
