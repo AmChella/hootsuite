@@ -132,8 +132,10 @@ export const authApi = {
     const params = new URLSearchParams({ code });
     if (state) params.append('state', state);
     
+    // Use the new POST exchange endpoint with correct redirect_uri
     const response = await apiRequest<{ access_token: string; user: User }>(
-      `/auth/sso/${provider}/callback?${params.toString()}`
+      `/auth/sso/${provider}/exchange?${params.toString()}`,
+      { method: 'POST' }
     );
     
     setToken(response.access_token);

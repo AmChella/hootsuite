@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
-import { authApi } from '../services/api';
-import { useAuth } from '../context';
+import { authApi, setToken } from '../services/api';
 import { Spinner } from '../components/ui';
 import './AuthCallback.css';
 
@@ -9,16 +8,38 @@ export function AuthCallback() {
   const { provider } = useParams<{ provider: string }>();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { } = useAuth();
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const handleCallback = async () => {
+      // Check for error first
+      const errorParam = searchParams.get('error');
+      if (errorParam) {
+        setError(errorParam);
+        return;
+      }
+
+      // Check for token (from backend SSO callback - backend already exchanged the code)
+      const token = searchParams.get('token');
+      if (token) {
+        try {
+          // Save the token and navigate to dashboard
+          await setToken(token);
+          window.location.href = '/dashboard';
+          return;
+        } catch (err) {
+          console.error('Token save error:', err);
+          setError('Failed to save authentication token');
+          return;
+        }
+      }
+
+      // Fallback: Handle code exchange (for direct OAuth callbacks)
       const code = searchParams.get('code');
       const state = searchParams.get('state');
 
       if (!code) {
-        setError('Authorization code not found');
+        setError('Authentication failed - no token or code received');
         return;
       }
 
@@ -32,8 +53,6 @@ export function AuthCallback() {
         const user = await authApi.handleSSOCallback(provider, code, state || undefined);
         
         if (user) {
-          // Token is already set by handleSSOCallback
-          // Force a page reload to refresh the auth state
           window.location.href = '/dashboard';
         } else {
           setError('Failed to authenticate');

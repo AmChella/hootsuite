@@ -26,11 +26,14 @@ async def lifespan(app: FastAPI):
 
 
 # Create FastAPI application
+# Note: redirect_slashes=False prevents 307 redirects that can break OAuth callbacks
+# when providers add trailing slashes to callback URLs
 app = FastAPI(
     title=settings.app_name,
     description="Social media management platform API",
     version="1.0.0",
     lifespan=lifespan,
+    redirect_slashes=False,
 )
 
 # Configure CORS

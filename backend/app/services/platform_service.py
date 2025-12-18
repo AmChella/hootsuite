@@ -28,7 +28,9 @@ class PlatformService:
         "instagram": {
             "auth_url": "https://www.facebook.com/v18.0/dialog/oauth",
             "token_url": "https://graph.facebook.com/v18.0/oauth/access_token",
-            "scopes": ["instagram_basic", "instagram_content_publish", "pages_read_engagement"],
+            # pages_show_list and pages_read_engagement are needed to access the Facebook Page
+            # instagram_basic and instagram_content_publish are needed for Instagram
+            "scopes": ["instagram_basic", "instagram_content_publish", "pages_show_list", "pages_read_engagement"],
             "post_url": "https://graph.facebook.com/v18.0/{ig_user_id}/media",
         },
         "linkedin": {
@@ -51,7 +53,8 @@ class PlatformService:
         credentials = {
             "twitter": (settings.twitter_client_id, settings.twitter_client_secret),
             "facebook": (settings.facebook_client_id, settings.facebook_client_secret),
-            "instagram": (settings.instagram_client_id, settings.instagram_client_secret),
+            # Instagram uses the same Facebook App credentials (Graph API)
+            "instagram": (settings.facebook_client_id, settings.facebook_client_secret),
             "linkedin": (settings.linkedin_client_id, settings.linkedin_client_secret),
             "youtube": (settings.youtube_client_id, settings.youtube_client_secret),
         }
@@ -234,6 +237,135 @@ class PlatformService:
                 }
     
     @classmethod
+    async def publish_to_instagram(
+        cls, account: ConnectedAccount, content: str, media_urls: List[str] = None
+    ) -> Dict[str, Any]:
+        """Publish a post to Instagram using the Graph API.
+        
+        Instagram requires media (image or video) for all posts.
+        The process is:
+        1. Create a media container with the image/video URL
+        2. Publish the container
+        """
+        ig_user_id = account.page_id or account.platform_user_id
+        access_token = account.access_token
+        
+        # Instagram requires at least one media item
+        if not media_urls or len(media_urls) == 0:
+            return {
+                "success": False,
+                "error": "Instagram requires at least one image or video to publish",
+            }
+        
+        async with httpx.AsyncClient() as client:
+            # For single image post
+            if len(media_urls) == 1:
+                # Step 1: Create media container
+                container_url = f"https://graph.facebook.com/v18.0/{ig_user_id}/media"
+                container_params = {
+                    "access_token": access_token,
+                    "image_url": media_urls[0],
+                    "caption": content,
+                }
+                
+                container_response = await client.post(container_url, data=container_params)
+                
+                if container_response.status_code != 200:
+                    return {
+                        "success": False,
+                        "error": f"Failed to create media container: {container_response.text}",
+                    }
+                
+                container_data = container_response.json()
+                creation_id = container_data.get("id")
+                
+                # Step 2: Publish the container
+                publish_url = f"https://graph.facebook.com/v18.0/{ig_user_id}/media_publish"
+                publish_params = {
+                    "access_token": access_token,
+                    "creation_id": creation_id,
+                }
+                
+                publish_response = await client.post(publish_url, data=publish_params)
+                
+                if publish_response.status_code == 200:
+                    data = publish_response.json()
+                    media_id = data.get("id")
+                    return {
+                        "success": True,
+                        "post_url": f"https://www.instagram.com/p/{media_id}/",
+                        "post_id": media_id,
+                    }
+                else:
+                    return {
+                        "success": False,
+                        "error": f"Failed to publish: {publish_response.text}",
+                    }
+            else:
+                # For carousel (multiple images)
+                # Step 1: Create containers for each image
+                children_ids = []
+                for image_url in media_urls[:10]:  # Instagram allows max 10 items
+                    container_url = f"https://graph.facebook.com/v18.0/{ig_user_id}/media"
+                    container_params = {
+                        "access_token": access_token,
+                        "image_url": image_url,
+                        "is_carousel_item": "true",
+                    }
+                    
+                    container_response = await client.post(container_url, data=container_params)
+                    
+                    if container_response.status_code == 200:
+                        children_ids.append(container_response.json().get("id"))
+                    else:
+                        return {
+                            "success": False,
+                            "error": f"Failed to create carousel item: {container_response.text}",
+                        }
+                
+                # Step 2: Create carousel container
+                carousel_url = f"https://graph.facebook.com/v18.0/{ig_user_id}/media"
+                carousel_params = {
+                    "access_token": access_token,
+                    "media_type": "CAROUSEL",
+                    "caption": content,
+                    "children": ",".join(children_ids),
+                }
+                
+                carousel_response = await client.post(carousel_url, data=carousel_params)
+                
+                if carousel_response.status_code != 200:
+                    return {
+                        "success": False,
+                        "error": f"Failed to create carousel: {carousel_response.text}",
+                    }
+                
+                creation_id = carousel_response.json().get("id")
+                
+                # Step 3: Publish the carousel
+                publish_url = f"https://graph.facebook.com/v18.0/{ig_user_id}/media_publish"
+                publish_params = {
+                    "access_token": access_token,
+                    "creation_id": creation_id,
+                }
+                
+                publish_response = await client.post(publish_url, data=publish_params)
+                
+                if publish_response.status_code == 200:
+                    data = publish_response.json()
+                    media_id = data.get("id")
+                    return {
+                        "success": True,
+                        "post_url": f"https://www.instagram.com/p/{media_id}/",
+                        "post_id": media_id,
+                    }
+                else:
+                    return {
+                        "success": False,
+                        "error": f"Failed to publish carousel: {publish_response.text}",
+                    }
+    
+    @classmethod
     async def publish(
         cls, account: ConnectedAccount, content: str, media_urls: List[str] = None
     ) -> Dict[str, Any]:
@@ -242,6 +374,7 @@ class PlatformService:
             "twitter": cls.publish_to_twitter,
             "facebook": cls.publish_to_facebook,
             "linkedin": cls.publish_to_linkedin,
+            "instagram": cls.publish_to_instagram,
         }
         
         publisher = publishers.get(account.platform_id)
@@ -252,3 +385,4 @@ class PlatformService:
             "success": False,
             "error": f"Unsupported platform: {account.platform_id}",
         }
+

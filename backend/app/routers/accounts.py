@@ -156,6 +156,48 @@ async def platform_oauth_callback(
             username = platform_user.get("name", "")
             display_name = platform_user.get("name", "")
             platform_user_id = platform_user.get("id", "")
+    elif platform_id == "instagram":
+        # For Instagram, we need to get the Instagram Business Account ID
+        # The endpoint returns Facebook Pages with their connected Instagram accounts
+        accounts = platform_user.get("data", [])
+        
+        ig_account_id = None
+        ig_username = None
+        fb_page_id = None
+        fb_page_access_token = None
+        
+        # Find a page with a connected Instagram Business Account
+        for page in accounts:
+            ig_business_account = page.get("instagram_business_account", {})
+            if ig_business_account and ig_business_account.get("id"):
+                ig_account_id = ig_business_account.get("id")
+                fb_page_id = page.get("id")
+                
+                # We need to get the page access token to use with Instagram
+                # Fetch the page details including access token
+                import httpx
+                async with httpx.AsyncClient() as client:
+                    page_url = f"https://graph.facebook.com/v18.0/{fb_page_id}?fields=access_token,instagram_business_account{{username,profile_picture_url,name}}&access_token={access_token}"
+                    page_response = await client.get(page_url)
+                    if page_response.status_code == 200:
+                        page_data = page_response.json()
+                        fb_page_access_token = page_data.get("access_token")
+                        ig_info = page_data.get("instagram_business_account", {})
+                        ig_username = ig_info.get("username", "")
+                        avatar = ig_info.get("profile_picture_url")
+                        display_name = ig_info.get("name", ig_username)
+                break
+        
+        if not ig_account_id:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="No Instagram Business Account found. Please ensure your Facebook Page has an Instagram Business or Creator account connected."
+            )
+        
+        username = f"@{ig_username}" if ig_username else ""
+        platform_user_id = ig_account_id
+        page_id = ig_account_id  # Store IG account ID in page_id for publishing
+        page_access_token = fb_page_access_token  # Use page access token
     elif platform_id == "linkedin":
         username = platform_user.get("name", "")
         display_name = platform_user.get("name", "")
