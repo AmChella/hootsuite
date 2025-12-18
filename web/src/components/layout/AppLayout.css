@@ -37,13 +37,4 @@
     z-index: 1;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .app-main {
-        margin-left: 0;
-    }
-
-    .app-content {
-        padding: var(--space-4);
-    }
-}
+/* Desktop Edition - Fixed layout */

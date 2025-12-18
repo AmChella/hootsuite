@@ -37,10 +37,11 @@ export function Login() {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [ssoLoading, setSsoLoading] = useState<string | null>(null);
   
-  const { login, loginWithSSO, error } = useAuth();
+  const { login, register, loginWithSSO, error } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -48,7 +49,11 @@ export function Login() {
     setIsLoading(true);
     
     try {
-      await login(email, password);
+      if (isLogin) {
+        await login(email, password);
+      } else {
+        await register(email, password, name);
+      }
       navigate('/dashboard');
     } catch {
       // Error is handled by context
@@ -153,8 +158,19 @@ export function Login() {
             <span>or continue with email</span>
           </div>
 
-          {/* Login Form */}
+          {/* Login/Register Form */}
           <form className="login-form" onSubmit={handleSubmit}>
+            {!isLogin && (
+              <Input
+                type="text"
+                label="Full Name"
+                placeholder="Enter your full name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            )}
+            
             <Input
               type="email"
               label="Email"

@@ -299,23 +299,38 @@
     line-height: var(--line-height-relaxed);
 }
 
-/* Responsive */
-@media (max-width: 640px) {
-    .login-page {
-        padding: var(--space-4);
-    }
+/* Desktop Edition - Fixed layouts */
 
-    .login-card {
-        padding: var(--space-6);
-    }
+/* Light Theme Overrides */
+.theme-light .login-bg-orb {
+    opacity: 0.3;
+}
 
-    .login-sso {
-        grid-template-columns: 1fr;
-    }
+.theme-light .login-bg-orb-1 {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+}
 
-    .login-features {
-        grid-template-columns: 1fr;
-    }
+.theme-light .login-bg-orb-2 {
+    background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+}
+
+.theme-light .login-bg-orb-3 {
+    background: #ec4899;
+    opacity: 0.2;
+}
+
+.theme-light .login-bg-pattern {
+    background-image:
+        linear-gradient(rgba(99, 102, 241, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99, 102, 241, 0.06) 1px, transparent 1px);
+}
+
+.theme-light .login-card {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+.theme-light .login-divider span {
+    background: var(--color-bg-primary);
 }
 
 @keyframes fadeInUp {

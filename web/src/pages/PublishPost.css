@@ -170,16 +170,7 @@
     margin-left: var(--space-2);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .publish-post-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .publish-schedule-inputs {
-        grid-template-columns: 1fr;
-    }
-}
+/* Desktop Edition - Fixed layout */
 
 @keyframes fadeIn {
     from {

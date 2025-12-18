@@ -192,6 +192,10 @@
   --glass-bg: rgba(255, 255, 255, 0.8);
   --glass-bg-hover: rgba(241, 243, 249, 0.9);
   --glass-border: rgba(0, 0, 0, 0.08);
+
+  /* Light theme gradients */
+  --gradient-dark: linear-gradient(180deg, #f8f9fc 0%, #e8ecf4 100%);
+  --gradient-glow: radial-gradient(ellipse at center, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
 }
 
 /* Base Styles */
@@ -778,54 +782,22 @@ a:hover {
   background-size: 60px 60px;
 }
 
-/* Responsive Breakpoints */
-@media (max-width: 1280px) {
-  :root {
-    --sidebar-width: 240px;
-  }
+/* Desktop-First Layout - Fixed Layout for Desktop Application */
+/* Minimum supported viewport: 1024px */
+
+/* Desktop App Window Styling */
+html {
+  min-width: 1024px;
+  overflow-x: auto;
 }
 
-@media (max-width: 1024px) {
-  :root {
-    --sidebar-width: 220px;
-  }
-
-  .container {
-    padding: 0 var(--space-4);
-  }
+body {
+  min-width: 1024px;
 }
 
-@media (max-width: 768px) {
-  :root {
-    --sidebar-width: 0px;
-    --header-height: 64px;
-  }
-
-  html {
-    font-size: 15px;
-  }
-
-  .grid-cols-4 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .grid-cols-3 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 640px) {
-  .grid-cols-2 {
-    grid-template-columns: 1fr;
-  }
-
-  .grid-cols-3 {
-    grid-template-columns: 1fr;
-  }
-
-  .grid-cols-4 {
-    grid-template-columns: 1fr;
-  }
+/* Container keeps consistent width */
+.container {
+  padding: 0 var(--space-6);
 }
 
 /* Toast Overrides */

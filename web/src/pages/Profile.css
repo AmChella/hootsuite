@@ -500,30 +500,7 @@
     height: 100%;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .profile-content {
-        grid-template-columns: 1fr;
-    }
-
-    .profile-tabs {
-        flex-direction: row;
-        overflow-x: auto;
-    }
-
-    .profile-tab {
-        white-space: nowrap;
-    }
-
-    .theme-options {
-        grid-template-columns: 1fr;
-    }
-
-    .profile-avatar-section {
-        flex-direction: column;
-        text-align: center;
-    }
-}
+/* Desktop Edition - Fixed layout */
 
 @keyframes fadeIn {
     from {

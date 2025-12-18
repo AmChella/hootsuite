@@ -58,6 +58,7 @@ function authReducer(state: AuthState, action: AuthAction): AuthState {
 
 interface AuthContextType extends AuthState {
   login: (email: string, password: string) => Promise<void>;
+  register: (email: string, password: string, name: string) => Promise<void>;
   loginWithSSO: (provider: string) => Promise<void>;
   logout: () => Promise<void>;
 }
@@ -95,6 +96,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const register = async (email: string, password: string, name: string) => {
+    dispatch({ type: 'AUTH_START' });
+    try {
+      const user = await authApi.register(email, password, name);
+      dispatch({ type: 'AUTH_SUCCESS', payload: user });
+    } catch (error) {
+      dispatch({ type: 'AUTH_FAILURE', payload: 'Registration failed. Please try again.' });
+      throw error;
+    }
+  };
+
   const loginWithSSO = async (provider: string) => {
     dispatch({ type: 'AUTH_START' });
     try {
@@ -112,7 +124,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ ...state, login, loginWithSSO, logout }}>
+    <AuthContext.Provider value={{ ...state, login, register, loginWithSSO, logout }}>
       {children}
     </AuthContext.Provider>
   );

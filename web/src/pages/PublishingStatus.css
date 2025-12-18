@@ -258,17 +258,4 @@
     }
 }
 
-/* Responsive */
-@media (max-width: 640px) {
-    .publishing-status-header {
-        flex-direction: column;
-    }
-
-    .publishing-result-main {
-        flex-wrap: wrap;
-    }
-
-    .publishing-result-actions {
-        flex-wrap: wrap;
-    }
-}
+/* Desktop Edition - Fixed layout */

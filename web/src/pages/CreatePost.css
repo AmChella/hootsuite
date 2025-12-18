@@ -214,21 +214,7 @@
     margin-bottom: var(--space-1);
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
-    .create-post-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .create-post-preview {
-        position: static;
-        order: -1;
-    }
-
-    .create-post-preview-card {
-        max-height: none;
-    }
-}
+/* Desktop Edition - Fixed multi-column layout */
 
 @keyframes fadeIn {
     from {

@@ -244,35 +244,7 @@
     color: var(--color-text-primary);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .post-history-filters {
-        flex-direction: column;
-    }
-
-    .post-history-search {
-        min-width: auto;
-    }
-
-    .post-history-filter-group {
-        flex-wrap: wrap;
-    }
-
-    .post-item-main {
-        flex-wrap: wrap;
-    }
-
-    .post-item-media {
-        width: 48px;
-        height: 48px;
-    }
-
-    .post-item-status {
-        order: -1;
-        width: 100%;
-        margin-bottom: var(--space-2);
-    }
-}
+/* Desktop Edition - Fixed layout */
 
 @keyframes fadeIn {
     from {

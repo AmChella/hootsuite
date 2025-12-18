@@ -519,19 +519,13 @@
     color: var(--color-error);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .header {
-        left: 0;
-    }
+/* Desktop Edition - No mobile menu needed */
+.header-menu-btn {
+    display: none !important;
+}
 
-    .header-menu-btn {
-        display: flex;
-    }
-
-    .mobile-menu-overlay {
-        display: block;
-    }
+.mobile-menu-overlay {
+    display: none !important;
 }
 
 @keyframes fadeIn {

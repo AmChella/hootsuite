@@ -184,9 +184,4 @@
     padding: var(--space-3);
 }
 
-/* Mobile */
-@media (max-width: 768px) {
-    .sidebar {
-        display: none;
-    }
-}
+/* Desktop Edition - Sidebar always visible */

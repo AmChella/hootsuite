@@ -354,52 +354,7 @@
     flex-direction: column;
 }
 
-/* Responsive */
-@media (max-width: 1280px) {
-    .dashboard-stats {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .dashboard-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .dashboard-performance {
-        grid-column: span 2;
-    }
-}
-
-@media (max-width: 768px) {
-    .dashboard-hero {
-        flex-direction: column;
-        text-align: center;
-        padding: var(--space-6);
-    }
-
-    .dashboard-hero-text {
-        max-width: none;
-    }
-
-    .dashboard-stats {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .dashboard-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .dashboard-accounts,
-    .dashboard-activity,
-    .dashboard-performance {
-        grid-column: span 1;
-    }
-}
-
-@media (max-width: 480px) {
-    .dashboard-stats {
-        grid-template-columns: 1fr;
-    }
-}
+/* Desktop Edition - Fixed multi-column layouts */
 
 @keyframes fadeIn {
     from {
